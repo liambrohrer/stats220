@@ -13,4 +13,4 @@
 
 [Check out one of my favorite Crash Course Youtube videos](https://youtu.be/jReX7qKU2yc?si=B1zMmHe07kLqqjWr)
 
-![Gotta love squids and guitars](https://c.tenor.com/8druEACXtX8AAAAd/tenor.gif)
+![Me](https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif)
