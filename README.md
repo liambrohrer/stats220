@@ -1,11 +1,16 @@
 # stats220
 
-This is my repo for STATS 220. 
+## This is my repo for STATS 220. 
 
-A little about me:
+### A little about me:
 
-- I am undertaking a degree in Computer Science and Statistics
-- I am taking STATS 220 because I'm interested in progressing my skills and it is also a pre-requisite for a stage three course I want to take.
+- I am undertaking a **Bachelor of Science** degree
+    - I'm majoring in *Computer Science* and *Statistics*
+- I am taking STATS 220 for the following reasons:
+    1. I'm interested in progressing my skills
+    2. It is also a pre-requisite for a stage three course I want to take
 - I am interested in learning about applying skills in data analytics to the real world to solve problems.
 
-A meme that captures how I currently feel about my university studies is ![](https://c.tenor.com/8druEACXtX8AAAAd/tenor.gif)
+[Check out one of my favorite Crash Course Youtube videos](https://youtu.be/jReX7qKU2yc?si=B1zMmHe07kLqqjWr)
+
+![Gotta love squids and guitars]([[https://c.tenor.com/8druEACXtX8AAAAd/tenor.gif](https://sl.bing.net/bMe83zLGv80)])
