@@ -1,0 +1,78 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+
+```
+
+```{css}
+h2{
+text-align: center;
+font-weight: bold;
+border-bottom: 4px solid #8B4513;
+font-family: "Tahoma", serif;
+}
+body{
+color: #8B4513;
+background-color: #FFEBCD;
+font-family: "Tahoma", serif;
+padding: 20px;
+}
+```
+
+## Elevator etiquette in the school library
+I wanted to investigate aspects of the elevator experience in the library such as how many people you can expect to be accompanied by, what floors you're likely to stop at, and whether people will pass the time spent in a confined space with stranges by going on their phone.
+
+```{r}
+library(tidyverse)
+
+#Loading and renaming the data to prepare it for exploration
+logged_data <- read.csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vSRc7Y8RLhepjaZ9OVR3Pu2xbXrlb8BU5Pz3B0lFK-Lxd4Rns1WxBwwAsfV8i0NOcKjaxEm-Wvlunj0/pub?gid=699649308&single=true&output=csv')
+logged_data <- rename(logged_data, Number_of_people = 2, Floors_stopped_at = 3, Checked_phone = 4)
+
+#Calculating the average number of other people in the elevator
+average_people <- round(sum(logged_data$Number_of_people)/length(logged_data$Number_of_people), 2)
+```
+
+You might be surprised to know that even through it can often be hard to find an available study space, the average number of people you'll share the elevator with is only **`r average_people`**.
+
+```{r}
+#Plotting the frequency of stopping at each floor
+floors <- c("G", "M", "1", "2", "3", "4", "5", "6")
+floors_frequency <- c(0, 0, 0, 0, 0, 0, 0, 0)
+floors_data <- separate_rows(logged_data, Floors_stopped_at, sep = ", ")
+iteration <- 1
+for(floor in floors){
+  floors_frequency[iteration] <- sum(floors_data$Floors_stopped_at == floor)
+  iteration <- iteration + 1
+}
+barplot(floors_frequency, names.arg = floors, main = "Floors stopped at", xlab = "Floors", ylab = "Frequency")
+```
+
+You might be less surprised to see at the bar chart above, showing the frequency of stopping at each floor. At first it may be surprising that floor five is the most common, but this can be explained by the fact that I always study on floor five and am the only person filling out the survey.
+
+```{r}
+#Calculating the overall probability of some checking their phone
+checked_phone_prob <- round(sum(logged_data$Checked_phone == "Yes")/length(logged_data$Checked_phone), 2)
+proportions <- c(checked_phone_prob, 1-checked_phone_prob)
+percents <- paste(proportions*100, "%", sep = "")
+pie(proportions, labels = paste(c("Yes:", "No:"), percents), main = "Probability someone checks their phone", col = rainbow(length(proportions)))
+
+```
+
+You can see here that the sample probability that someone in the elevator with you checks their phone is **`r checked_phone_prob*100`%**. I would expect this to be more as people seem to use every quiet minute nowdays to check their phone.
+
+```{r}
+phone_prob <- c()
+for(i in 1:max(logged_data$Number_of_people)){
+  small_data <- filter(logged_data, Number_of_people == i)
+  phone_prob_val <- sum(small_data$Checked_phone == "Yes")/length(small_data$Checked_phone)
+  phone_prob <- c(phone_prob, phone_prob_val)
+}
+plot(phone_prob, names = c(1, 2, 3, 4), main = "Probablity someone checks\ntheir phone, given the number of\npeople riding with them", xlab = "Number of people", ylab = "Probability", type = "l")
+```
+
+Finally, I explored how the probability that someone checks their phone changes as the the number of people in the elevator with them changes. There seems to be no discernible trend in the data but we can expect this is due to the limited sample size.
