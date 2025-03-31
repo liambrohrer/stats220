@@ -66,13 +66,15 @@ pie(proportions, labels = paste(c("Yes:", "No:"), percents), main = "Probability
 You can see here that the sample probability that someone in the elevator with you checks their phone is **`r checked_phone_prob*100`%**. I would expect this to be more as people seem to use every quiet minute nowdays to check their phone.
 
 ```{r}
-phone_prob <- c()
-for(i in 1:max(logged_data$Number_of_people)){
-  small_data <- filter(logged_data, Number_of_people == i)
-  phone_prob_val <- sum(small_data$Checked_phone == "Yes")/length(small_data$Checked_phone)
-  phone_prob <- c(phone_prob, phone_prob_val)
-}
-plot(phone_prob, names = c(1, 2, 3, 4), main = "Probablity someone checks\ntheir phone, given the number of\npeople riding with them", xlab = "Number of people", ylab = "Probability", type = "l")
+ggplot(phone_prob_df, aes(x = Number_of_people, y = phone_prob)) +
+  geom_line(color = "steelblue", size = 2) +
+  geom_point(color = "orange", size = 5) +
+  labs(
+    title = "Probability someone checks\ntheir phone, given the number of\npeople riding with them",
+    x = "Number of people",
+    y = "Probability"
+  ) +
+  theme_minimal()
 ```
 
 Finally, I explored how the probability that someone checks their phone changes as the the number of people in the elevator with them changes. There seems to be no discernible trend in the data but we can expect this is due to the limited sample size.
