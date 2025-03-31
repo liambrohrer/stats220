@@ -66,6 +66,10 @@ pie(proportions, labels = paste(c("Yes:", "No:"), percents), main = "Probability
 You can see here that the sample probability that someone in the elevator with you checks their phone is **`r checked_phone_prob*100`%**. I would expect this to be more as people seem to use every quiet minute nowdays to check their phone.
 
 ```{r}
+#Calculating and plotting the probability that someone checks their phone, given the number of people in the elevator with them
+phone_prob_df <- logged_data %>%
+  group_by(Number_of_people) %>%
+  summarise(phone_prob = mean(Checked_phone == "Yes"))
 ggplot(phone_prob_df, aes(x = Number_of_people, y = phone_prob)) +
   geom_line(color = "steelblue", size = 2) +
   geom_point(color = "orange", size = 5) +
